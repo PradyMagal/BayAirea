@@ -17,12 +17,12 @@ While there are many apps out there, they have some problems,<br />
 We wanted to be the app that makes the difference for our local cities here, in the California Bay Area, by providing people with the air quality information they need, and none of the other stuff they don't.
 
 
-##How We Made It
+###How We Made It
 Using Google's amazing Java framework <a href="flutter.io">Flutter</a>, we were able to make a native app for both IOS and Android simultaneously. For the data itself, we used <a href="purpleair.org">PurpleAir</a>, a company which allows people to install air-quality sensors in their homes, and uses their wifi and electricity to add data to their network
 <br />
 
 
-#Contributors
+####Contributors
 Founder/Project Lead: Pradyun Magal
 
 
