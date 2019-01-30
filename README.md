@@ -4,7 +4,7 @@ Welcome to Bay Airea, a simple, easy to use, yet effective Air Quality App for I
 ## Why We made This
 
 After the California fires, many were left dubious of the air quality, and wanted to know whether it was safe or not to go outside.
-<br />
+__
 While there are many apps out there, they have some problems,<br />
 -They have their hard to use scale
 -They average out all of the particle densities into one measure, when in reality, all one needs to care about are 2.5 AQI particles(these are small enough to enter your lungs, and into your blood stream)
