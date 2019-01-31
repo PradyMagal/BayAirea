@@ -33,4 +33,3 @@ For the data itself, we use [PurpleAir](https://www.purpleair.com/), a company w
 - Second in command: Kai
 
 
-> fb080847d76d1875d03b00812c99710f1729401a
