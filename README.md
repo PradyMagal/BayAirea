@@ -29,7 +29,7 @@ For the data itself, we use [PurpleAir](https://www.purpleair.com/), a company w
 
 ## Contributors
 
-- Founder/Project Lead: Pradyun Magal
+- Founder/Project Lead: Pradyun M
 - Second in command: Kai
 
 
