@@ -1,5 +1,5 @@
 
-# BayAirea
+# Bay Airea
 
 Welcome to Bay Airea, a simple, easy to use, yet effective Air Quality App for IOS, and Android!
 
