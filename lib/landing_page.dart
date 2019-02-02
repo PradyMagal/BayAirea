@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:location/location.dart'; //We will implement location later, we will se how the project goes
 
 class LandingPage extends StatelessWidget{
   @override
@@ -10,6 +11,7 @@ class LandingPage extends StatelessWidget{
         print("Tappity-Tap!");
       },
       child: new Column(
+        
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new Icon(Icons.warning, color: Colors.white,size: 150,),
