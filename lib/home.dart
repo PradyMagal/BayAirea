@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'tab_manager.dart';
+import 'settings.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _HomePageState extends State<HomePage> {
         child: new ListView(
           children: <Widget>[
             new ListTile(
-              title: new Text("My Locations" ,style: new TextStyle(fontSize: 25),),
+              title: new Text("Menu" ,style: new TextStyle(fontSize: 25),),
               //onTap: (){print("Back clicked");},
             ),
             new ListTile(
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
             new ListTile(
               title: new Text("Settings" ,style: new TextStyle(fontSize: 15),),
               trailing: new Icon(Icons.settings),
-              //onTap: (){print("Back clicked");},
+              onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new SettingsPage())),
             )
           ],
         )
