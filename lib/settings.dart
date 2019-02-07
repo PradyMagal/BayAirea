@@ -17,17 +17,30 @@ class _SettingsPageState extends State<SettingsPage> {
           children: <Widget>[
             new ListTile(
               title: new Text("Menu" ,style: new TextStyle(fontSize: 25),), 
-              //onTap: (){print("Back clicked");},
             ),
+
+            new ListTile(
+              leading: new Icon(Icons.exit_to_app),
+              title: new Text("Close Menu" ,style: new TextStyle(fontSize: 15),),
+              onTap: () {
+                Navigator.pop(context);
+              }
+            ),
+
+            
             new ListTile(
               title: new Text("Home" ,style: new TextStyle(fontSize: 15),),
               trailing: new Icon(Icons.home),
-              onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new HomePage())),
+              onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => HomePage())),
             ),
+            
             
           ],
         )
       ),
+      body: new Table(
+        
+      ), 
     );
   }
 }

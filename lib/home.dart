@@ -17,17 +17,26 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             new ListTile(
               title: new Text("Menu" ,style: new TextStyle(fontSize: 25),),
-              //onTap: (){print("Back clicked");},
             ),
+            
+            new ListTile(
+              title: new Text("Close Menu" ,style: new TextStyle(fontSize: 15),),
+              trailing: new Icon(Icons.exit_to_app),
+              onTap: () {
+                Navigator.pop(context);
+              }
+            ),
+
             new ListTile(
               title: new Text("Location 1" ,style: new TextStyle(fontSize: 15),),
-              //onTap: (){print("Back clicked");},
             ),
+
             new ListTile(
               title: new Text("Settings" ,style: new TextStyle(fontSize: 15),),
               trailing: new Icon(Icons.settings),
               onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new SettingsPage())),
             )
+
           ],
         )
       ),
