@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
-import 'home.dart';
+import 'package:bay_airea/pages/home.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -18,7 +17,6 @@ class _SettingsPageState extends State<SettingsPage> {
             new ListTile(
               title: new Text("Menu" ,style: new TextStyle(fontSize: 25),), 
             ),
-
             new ListTile(
               leading: new Icon(Icons.exit_to_app),
               title: new Text("Close Menu" ,style: new TextStyle(fontSize: 15),),
