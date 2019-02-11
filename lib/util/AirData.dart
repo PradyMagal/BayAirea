@@ -15,9 +15,7 @@ class AirData {
   //These are 2.5um particles right now, might be the wrong one
   static double particles = -1;
 
-  AirData() {
-    reloadData();
-  }
+  AirData._();
 
   static reloadData() async {
     var purpleAirResponse = await http.get(url + key);
@@ -46,7 +44,13 @@ class AirData {
     print("2.5 PM ug/m3: $particles \n");
   }
 
+  //ensures program waits until data is received
+  static Future<AirData> create() async {
+    AirData a = new AirData._();
+    await reloadData();
 
+    return a;
+  }
 
 
 }

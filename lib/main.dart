@@ -3,8 +3,8 @@ import 'package:bay_airea/util/AirData.dart';
 import 'package:bay_airea/pages/home.dart';
 
 
-void main() {
-  new AirData();
+void main() async {
+  AirData a = await AirData.create();
 
   runApp(new MaterialApp(
     theme: new ThemeData(),

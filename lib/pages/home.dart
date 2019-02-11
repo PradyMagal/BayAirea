@@ -59,25 +59,37 @@ class _HomePageState extends State<HomePage>{
                   }
             )),
             new Container (
-
-                child: new Column ( children: [
-                  new Padding(
-                    padding: EdgeInsets.fromLTRB(10, 160, 10, 0)
-                  ),
-                  new Text("Currently Using: " + AirData.currentSensor),
-                  new Text("Temperature (F): ${AirData.temperatureF}"),
-                  new Text("Humidity (%): ${AirData.humidityPercent}"),
-                  new Text("Particles: ${AirData.particles}")
-              ])
+              alignment: Alignment.center,
+              child: Card (
+                child: Column (
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget> [
+                    /*ListTile(
+                      leading: Icon(Icons.location_city),
+                      title: Text(AirData.currentSensor),
+                      subtitle: Text("Change location in settings.")
+                    ),*/
+                    new Padding(
+                      padding: EdgeInsets.only(top: 20)
+                    ),
+                    new Text("     Current Sensor: " + AirData.currentSensor + "    "),
+                    new Text("Temperature (F): ${AirData.temperatureF}"),
+                    new Text("Humidity (%): ${AirData.humidityPercent}"),
+                    new Text("Particles: ${AirData.particles}"),
+                    new Padding(
+                        padding: EdgeInsets.only(bottom: 20)
+                    )
+                  ]
+                )
+              )
             )
           ]
         ),
       ),
 
     );
-
-    
   }
+
 }
 
 
