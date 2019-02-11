@@ -24,15 +24,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 Navigator.pop(context);
               }
             ),
-
-            
             new ListTile(
               title: new Text("Home" ,style: new TextStyle(fontSize: 15),),
               trailing: new Icon(Icons.home),
               onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => HomePage())),
             ),
-            
-            
           ],
         )
       ),
@@ -40,5 +36,7 @@ class _SettingsPageState extends State<SettingsPage> {
         
       ), 
     );
+
+
   }
 }

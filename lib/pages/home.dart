@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:bay_airea/pages/settings.dart';
 import 'package:bay_airea/pages/landing_page.dart';
 import 'package:bay_airea/util/AirData.dart';
-import 'dart:convert' as convert;
-import 'package:http/http.dart' as http;
 
 
 
@@ -16,7 +14,6 @@ class _HomePageState extends State<HomePage>{
   @override
 
   Widget build(BuildContext context) {
-    new AirData();
 
 
 

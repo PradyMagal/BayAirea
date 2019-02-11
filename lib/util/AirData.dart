@@ -1,11 +1,13 @@
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:bay_airea/pages/home.dart';
 
 class AirData {
   static final String key = "15130";
   static final String url = "https://www.purpleair.com/json?show=";
 
-  static String currentSensor = "";
+  static String currentSensor = "Please Refresh";
   static int temperatureF = -1;
   static int humidityPercent = -1;
   static double latitude = -1, longitude = -1;
@@ -36,7 +38,6 @@ class AirData {
     var thingspeakJSON = convert.jsonDecode(thingspeakResponse.body);
 
     AirData.particles = double.parse(thingspeakJSON["feeds"][0]["field2"]);
-
     printData();
   }
 
