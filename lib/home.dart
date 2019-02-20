@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'settings.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 
 
@@ -15,8 +16,7 @@ class _HomePageState extends State<HomePage>{
   Widget build(BuildContext context){
 
     return new Scaffold(
-      appBar: new AppBar(title: Text("Bay Airea"), backgroundColor: Colors.tealAccent[100],),
-
+      appBar: new GradientAppBar(title: Text("Bay Airea"), backgroundColorStart: Colors.tealAccent[100], backgroundColorEnd: Colors.blueAccent[100],),
       drawer: new Drawer(
 
         child: new ListView(
@@ -31,29 +31,27 @@ class _HomePageState extends State<HomePage>{
               title: new Text("Close Menu" ,style: new TextStyle(fontSize: 15),),
               leading: new Icon(Icons.exit_to_app),
               onTap: () {
-                Navigator.pop(context); //This closes the menu, and brings the user back to what he/she was on
+                Navigator.pop(context);
               }
             ),
 
             new ListTile(
               title: new Text("Location 1" ,style: new TextStyle(fontSize: 15),),
-              onTap: () async{
+              onTap: (){
 
-                //var x = await jsonTest("Ferrari"); //Change the parameter and see how many results google has
-                var y = await sensorTest(); //DO NOT MODIFY
 
                 showDialog(context: context, child:
 
                   new AlertDialog(
                     title: new Text("JSON Test"), //DO NOT CHANGE ANY OF THIS
-                    content: new Text(y),
+                    content: new Text("Hello World"),
                   )
 
                 );
               }
             ),
 
-            new ListTile( //Brings user to our rather boring settings page 
+            new ListTile( 
               title: new Text("Settings" ,style: new TextStyle(fontSize: 15),),
               trailing: new Icon(Icons.settings),
               onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => SettingsPage())),
@@ -66,8 +64,35 @@ class _HomePageState extends State<HomePage>{
       ),
 
       body: 
-      new Center(
-        child: new Text("This is where the content goes"),
+      new Card(
+
+        child: new Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          new Padding(
+            padding: const EdgeInsets.only(top: 25.0, bottom: 8.0),
+            child: new Text("Gemello Park, Mountain View: (AQI reading goes Here)", //Replace "(AQI reading goes here)" with the actual AQI reading, obtain the variable from the air_data class
+                style: new TextStyle(
+                    color: new Color.fromARGB(255, 117, 117, 117),
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold)),
+          ),
+          new Divider(
+            color: Colors.grey,
+          ),
+          new Card(
+            color: Colors.greenAccent,
+            child: new Row(
+              children: <Widget>[
+                new Icon(Icons.pets, color: Colors.grey,size: 75),
+                new Text("The air quality should be safe for pets"), //This is a template as to what the app will look like, we will work on this LATER Kai
+
+            ],
+            )
+          ),
+
+        ],
+      ),
       ),
 
     );
@@ -95,33 +120,8 @@ Future<String> jsonTest(String user) async{
     return output; //returns the string we created
 }
 
-/*
-
-Ok, So I've found out how to get the purple air JSON data and display it as an alert...
-
-Try and get it to display the live air quality reading by monday, in order to to this, modify the mapV variable below, DO NOT TOUCH ANYTHING ELSE
-
-It should display whatever the mapV variable is set when you click on the side menu tap "Location 1"(there is a small delay)
 
 
-
-*/
-
-Future<String> sensorTest() async{
-  var url = "https://www.purpleair.com/json?show=15130";//A random sensor in mountain view
-  var response =  await http.get(url);//Parses it
-  if( response.statusCode == 200){
-    var jsonResponse = convert.jsonDecode(response.body);
-    var mapV = jsonResponse['mapVersion']; //This is gets the map version, should return 0.72
-    String output = "Map Version: "+mapV;
-    return output;
-  }
-  else{
-    return "Something is wrong";
-  }
-  
-
-}
 
 
 

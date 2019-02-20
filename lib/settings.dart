@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 import 'home.dart';
 
+
 class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => new _SettingsPageState();
@@ -38,9 +39,18 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         )
       ),
-      body: new Table(
-        
+      body: new ListView(
+        children: <Widget>[
+          ListTile(
+              trailing: Icon(Icons.info),
+              title: Text('About Us'),
+            ),
+            Divider(color: Colors.grey,),
+
+        ]
+
       ), 
     );
   }
 }
+
