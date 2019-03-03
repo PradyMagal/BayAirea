@@ -12,7 +12,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context){
     return new Scaffold(
-      appBar: new AppBar(title: Text("Settings"), backgroundColor: Colors.tealAccent[100]),
+      appBar: new AppBar(title: new Text("Settings", style: TextStyle(color: Colors.black),), backgroundColor: Colors.grey[300], ),
       drawer: new Drawer(
         child: new ListView(
           children: <Widget>[
