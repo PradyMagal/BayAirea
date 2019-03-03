@@ -30,6 +30,12 @@ class _HomePageState extends State<HomePage>{
   Widget build(BuildContext context){
     startUp(); 
 
+    void showInSnackBar(String value) {
+    Scaffold.of(context).showSnackBar(new SnackBar(
+        content: new Text(value)
+    ));
+  }
+
     return new Scaffold(
       appBar: new GradientAppBar(title: Text("Bay Airea"), backgroundColorStart: Colors.tealAccent[100], backgroundColorEnd: Colors.blueAccent[100],),
       drawer: new Drawer(
@@ -136,6 +142,7 @@ class _HomePageState extends State<HomePage>{
               elevation: 5.0,
               splashColor: Colors.blueGrey, //Again, bad with colors choose whatever looks good
               onPressed: ()async{
+                                
               AirData a1 = new AirData();
               String aqi2_5U =await a1.airQuality();
               String labelU =await a1.sensorName(); //DO NOT MODIFY. I found out the hard way that there are hundreds of ways of reframing this code that might seem like they work, but this is the only way that actually works
