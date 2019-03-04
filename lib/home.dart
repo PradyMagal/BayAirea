@@ -5,19 +5,32 @@ import 'package:http/http.dart' as http;
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'air_data.dart';
 
+const oneSecond = Duration(seconds: 1);
+
 String aqi2_5 = "";
 String mult = "";
 String label = "";
 String temp= "";
 int aqiInt = 0;
 
+Future<List> reloadData() async{
+  var aqi = await AirData.receiveData("PM2_5Value");
+  var alb = await AirData.receiveData("Label");
+  var tmp = await AirData.receiveData("temp_f");
+  var list = [aqi, alb, tmp];
+  Future.delayed(oneSecond, () => list);
+  return list;
+}
+
 void startUp()async{ //Sets up the variables
-  
-  AirData a1 = new AirData();
-  aqi2_5 = await a1.airQuality();
-  label =await a1.sensorName();
-  temp =await a1.tempF();
-  }
+  var list =  await reloadData();
+
+  aqi2_5 = list[0];
+  label = list[1];
+  temp = list[2];
+}
+
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -143,15 +156,14 @@ class _HomePageState extends State<HomePage>{
               splashColor: Colors.blueGrey, //Again, bad with colors choose whatever looks good
               onPressed: ()async{
                                 
-              AirData a1 = new AirData();
-              String aqi2_5U =await a1.airQuality();
-              String labelU =await a1.sensorName(); //DO NOT MODIFY. I found out the hard way that there are hundreds of ways of reframing this code that might seem like they work, but this is the only way that actually works
-              String tempU =await a1.tempF(); //U Stands for updated
+              var list =  await reloadData();
+              String aqi2_5U = list[0];
+              String labelU = list[1]; //DO NOT MODIFY. I found out the hard way that there are hundreds of ways of reframing this code that might seem like they work, but this is the only way that actually works
+              String tempU = list[2]; //U Stands for updated
                 setState(() { //This lets the framework know that there is a change in variables and assigns the variables to updated versions at the same time
                   aqi2_5 =aqi2_5U;
                   label =labelU;
                   temp =tempU;
-                  
                 });
                 
 
@@ -196,5 +208,7 @@ class _HomePageState extends State<HomePage>{
 
     return indicator;
   }
+
+
   
 }

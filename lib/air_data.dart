@@ -4,11 +4,29 @@ import 'package:http/http.dart' as http;
 
 const oneSecond = Duration(seconds: 1);
 
-class AirData{
+class AirData {
 
+  static Future<String> receiveData(String key) async {
+    //This returns a string
+    var url = "https://www.purpleair.com/json?show=15130"; //A random sensor in mountain view
+    var response = await http.get(url); //Parses it
+    if (response.statusCode == 200) {
+      var jsonResponse = convert.jsonDecode(response.body);
+      var res = jsonResponse['results'][0][key];
+      Future.delayed(oneSecond, () => res);
+      String output = res;
+      return output;
+    }
+    else {
+      return "Could not connect to server";
+    }
+  }
+}
+
+/*
 
 Future<String> airQuality() async{
-  //This returns a string 
+  //This returns a string
   var url = "https://www.purpleair.com/json?show=15130";//A random sensor in mountain view
     var response =  await http.get(url);//Parses it
    if (response.statusCode == 200){
@@ -55,6 +73,7 @@ Future<String> airQuality() async{
 
 }
 
+*/
 
 /* 
   What we have so far: Air quality in AQI, sensor name, temperature in f, city name,
