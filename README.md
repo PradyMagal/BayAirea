@@ -30,6 +30,10 @@ For the data itself, we use [PurpleAir](https://www.purpleair.com/), a company w
 ## Contributors
 
 - Founder/Project Lead: Pradyun M
-- Second in command: Kai
+- Head Developer: Kai
+
+## License/Terms and Conditions
+Bay Airea is under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
 
 
