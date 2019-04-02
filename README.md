@@ -29,7 +29,7 @@ For the data itself, we use [PurpleAir](https://www.purpleair.com/), a company w
 
 ## Contributors
 
-- Founder/Project Lead: Pradyun M
+- Founder/Project Lead: (Pradyun M)[https://pradymagal.github.io]
 - Head Developer: Kai
 
 ## License/Terms and Conditions
