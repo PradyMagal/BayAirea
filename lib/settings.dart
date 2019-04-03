@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'home.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 
 class SettingsPage extends StatefulWidget {
@@ -41,16 +43,51 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: new ListView(
         children: <Widget>[
-          ListTile(
+        new ListTile(
               trailing: Icon(Icons.info),
-              title: Text('About Us'),
+              title: Text("About Us"),
+              // onTap: _launchURL(),
+              onTap: () async{
+                const url = 'https://pradymagal.github.io/BayAirea';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
             ),
             Divider(color: Colors.grey,),
-
+        new ListTile(
+          trailing:  Icon(Icons.linear_scale),
+          title: Text("Our Scale"),
+          ),
+          Divider(color: Colors.grey),
+        new ListTile(
+          trailing:  Icon(Icons.more),
+          title: Text("Learn more about 2.5 AQI air particles"),
+           onTap: () async{
+              const url = 'https://airnow.gov/index.cfm?action=aqibasics.particle';
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
+        ),
+        
         ]
 
       ), 
     );
   }
 }
+// _launchURL() async {
+//   const url = 'https://flutter.io';
+//   if (await canLaunch(url)) {
+//     await launch(url);
+//   } else {
+//     throw 'Could not launch $url';
+//   }
+// }
+
 

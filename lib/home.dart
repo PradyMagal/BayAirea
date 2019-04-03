@@ -4,211 +4,313 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'air_data.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-const oneSecond = Duration(seconds: 1);
+
 
 String aqi2_5 = "";
 String mult = "";
 String label = "";
-String temp= "";
-int aqiInt = 0;
-
-Future<List> reloadData() async{
-  var aqi = await AirData.receiveData("PM2_5Value");
-  var alb = await AirData.receiveData("Label");
-  var tmp = await AirData.receiveData("temp_f");
-  var list = [aqi, alb, tmp];
-  Future.delayed(oneSecond, () => list);
-  return list;
-}
+String humidity= "";
+double aqiInt = -1;
 
 void startUp()async{ //Sets up the variables
-  var list =  await reloadData();
-
-  aqi2_5 = list[0];
-  label = list[1];
-  temp = list[2];
-}
-
-
+  AirData a1 = new AirData();
+  aqi2_5 = await a1.airQuality();
+  label =await a1.sensorName();
+  humidity =await a1.humidity();
+  aqiInt = double.tryParse(aqi2_5);
+ }
 
 class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => new _HomePageState();
+ @override
+ _HomePageState createState() => new _HomePageState();
 }
 class _HomePageState extends State<HomePage>{
-  @override
+ @override
   
 
-  Widget build(BuildContext context){
-    startUp(); 
+ Widget build(BuildContext context){
+   startUp();
+  final screenSize = MediaQuery.of(context).size;
 
-    void showInSnackBar(String value) {
-    Scaffold.of(context).showSnackBar(new SnackBar(
-        content: new Text(value)
-    ));
-  }
+   
 
-    return new Scaffold(
-      appBar: new GradientAppBar(title: Text("Bay Airea"), backgroundColorStart: Colors.tealAccent[100], backgroundColorEnd: Colors.blueAccent[100],),
-      drawer: new Drawer(
+   return new Scaffold(
+     appBar: new GradientAppBar(title: Text("Bay Airea"), backgroundColorStart: Colors.tealAccent[100], backgroundColorEnd: Colors.blueAccent[100],),
+     drawer: new Drawer(
 
-        child: new ListView(
+       child: new ListView(
 
-          children: <Widget>[
+         children: <Widget>[
 
-            new ListTile(
-              title: new Text("Menu" ,style: new TextStyle(fontSize: 25),),
-            ),
-            
-            new ListTile(
-              title: new Text("Close Menu" ,style: new TextStyle(fontSize: 15),),
-              leading: new Icon(Icons.exit_to_app),
-              onTap: () {
-                Navigator.pop(context);
-              }
-            ),
+           new ListTile(
+             title: new Text("Menu" ,style: new TextStyle(fontSize: 25),),
+           ),
+          
+           new ListTile(
+             title: new Text("Close Menu" ,style: new TextStyle(fontSize: 15),),
+             leading: new Icon(Icons.exit_to_app),
+             onTap: () {
+               Navigator.pop(context);
+             }
+           ),
 
-            new ListTile(
-              title: new Text("Test" ,style: new TextStyle(fontSize: 15),), //For debugging only
-              onTap: () async{
+           new ListTile(
+             title: new Text("Test" ,style: new TextStyle(fontSize: 15),), //For debugging only
+             onTap: () async{
 
-                startUp();
+               startUp();
 
 
-                showDialog(context: context, child:
+               showDialog(context: context, child:
 
-                  new AlertDialog(
-                    title: new Text("JSON Test"), //DO NOT CHANGE ANY OF THIS
-                    content: new Text("Hello world"),
-                  )
+                 new AlertDialog(
+                   title: new Text("JSON Test"), //DO NOT CHANGE ANY OF THIS
+                   content: new Text("Hello world"),
+                 )
 
-                );
-              }
-            ),
+               );
+             }
+           ),
 
-            new ListTile( 
-              title: new Text("Settings" ,style: new TextStyle(fontSize: 15),),
-              trailing: new Icon(Icons.settings),
-              onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => SettingsPage())),
+        new ListTile(
+             title: new Text("Settings" ,style: new TextStyle(fontSize: 15),),
+             trailing: new Icon(Icons.settings),
+             onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => SettingsPage())),
+            // onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingsPage())),
+            // onTap: (){
+            //   //super.initState();
+            //   Future.delayed(Duration(seconds: 1),(){
+            //     Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingsPage()));
+            //   });
+            // },
+        ),
+        new ListTile(
+          trailing:  Icon(Icons.help),
+          title: Text("What am I looking at?"),
+          onTap: (){
+           showDialog( context: context, child: 
+            new AlertDialog(
+              title: new Text("Tutorial", textAlign: TextAlign.center,), 
+              titlePadding: EdgeInsets.only(top: 10, bottom: 5),
+              // content: new ListView(),
+              shape:  RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              content: new Scaffold(
+               
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("OK"),
+                  onPressed: (){Navigator.of(context).pop();},
+                )
+              ],
+              
             )
+           );
+          },
+        ),
 
-          ],
+        ],
 
-        )
+       )
 
-      ),
+     ),
 
-      body: 
-      new Card(
+     body:
+     new Card(
 
-        child: new Column(
-        //mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          new Padding(
-            padding: const EdgeInsets.only(top: 25.0, bottom: 8.0),
-            child: new Text(aqi2_5, 
-                style: new TextStyle(
-                    color: new Color.fromARGB(255, 117, 117, 117),
-                    fontSize: 45.0,
-                    fontWeight: FontWeight.normal)),
-          ),
-          new Divider(
-            color: Colors.grey,
-          ),
-          new Card(
-            color: Colors.greenAccent, 
-            child: new Row(
-              children: <Widget>[
-                new Icon(Icons.pets, color: Colors.black,size: 75),
-                new Text("The air quality should be safe for pets"), 
+       child: new Column(
+       //mainAxisSize: MainAxisSize.min,
+       children: <Widget>[
+         new Padding(
+           padding: const EdgeInsets.only(top: 25.0, bottom: 8.0),
+           child: new Text(aqi2_5,
+               style: new TextStyle(
+                   color: new Color.fromARGB(255, 117, 117, 117),
+                   fontSize: 45.0,
+                   fontWeight: FontWeight.normal)),
+         ),
+         new Divider(
+           color: Colors.grey,
+         ),
+        maskCard(aqiInt),
+        petCard(aqiInt),
+        outCard(aqiInt),
+         Row(
+           mainAxisAlignment: MainAxisAlignment.end,
+           children: <Widget>[
 
-            ],
-            )
-          ),
-          new Card(
-            color: Colors.yellowAccent, //This is the background color of the card
-            child: new Row(
-              children: <Widget>[
-                new Icon(Icons.face, color: Colors.black,size: 75),
-                new Text("Mask may be needed for those with sensitive lungs", style: TextStyle(fontSize: 11),), 
-            ],
-            )
-          ),
-           new Card(
-            color: colorTest(),//This is what I'm thinking, a function that returns a color based on the AQI Value
-            child: new Row(
-              children: <Widget>[
-                new Icon(Icons.directions_run, color: Colors.black,size: 75),
-                new Text("Air quality is too poor to partake in outdoor activities", style: TextStyle(fontSize: 11)), 
-            ],
-            )
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-
-            new RaisedButton( 
-              child: const Icon(Icons.refresh, color: Colors.white,),
-              color: Colors.blue[600], //I'm bad with colors, change it if you want but don't go too crazy
-              shape:  new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(50.0)),
-              elevation: 5.0,
-              splashColor: Colors.blueGrey, //Again, bad with colors choose whatever looks good
-              onPressed: ()async{
-                                
-              var list =  await reloadData();
-              String aqi2_5U = list[0];
-              String labelU = list[1]; //DO NOT MODIFY. I found out the hard way that there are hundreds of ways of reframing this code that might seem like they work, but this is the only way that actually works
-              String tempU = list[2]; //U Stands for updated
+           new RaisedButton(
+             child: const Icon(Icons.refresh, color: Colors.white,),
+             color: Colors.blue[600], 
+             shape:  new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(50.0)),
+             elevation: 5.0,
+             splashColor: Colors.blueGrey, 
+             onPressed: ()async{
+                AirData a1 = new AirData();
+                String aqi2_5U =await a1.airQuality();
+                String labelU =await a1.sensorName(); //DO NOT MODIFY. I found out the hard way that there are hundreds of ways of reframing this code that might seem like they work, but this is the only way that actually works
+                String humidityU =await a1.humidity();
+                double aqiIntU = double.tryParse(aqi2_5U);
                 setState(() { //This lets the framework know that there is a change in variables and assigns the variables to updated versions at the same time
                   aqi2_5 =aqi2_5U;
                   label =labelU;
-                  temp =tempU;
-                });
-                
+                  humidity =humidityU;
+                  aqiInt = aqiIntU;
+                });              
+             },
+           ),
 
-              },
-            ),
+         ],
 
-          ],
-
-            
-        ),
           
-          Divider(
-            color: Colors.grey,
-          ),
-          new ListTile( 
-            leading: Icon(Icons.settings_input_antenna),
-            title: new Text(label,style: new TextStyle(fontWeight: FontWeight.normal,fontStyle: FontStyle.italic)),
-          ),
+       ),
+        
+         Divider(
+           color: Colors.grey,
+         ),
          new ListTile(
-            leading: Icon(Icons.location_city),
-            title: new Text("Mountain View",style: new TextStyle(fontWeight: FontWeight.normal,fontStyle: FontStyle.italic)),
-          ),
-          new ListTile(
-            leading: Icon(Icons.wb_cloudy), //Is there any data that better fits here? Let me know(For example humidity and pressure, the sensors provide that too)
-            title: new Text(temp,style: new TextStyle(fontWeight: FontWeight.normal,fontStyle: FontStyle.italic)),
-          )
-        ],
-      ),
-      ),
-    );
-    
-    
-  }
-
-
-  Color colorTest(){ //This works, but still not what we are looking for
-    int thing = 0;
-    Color indicator = Colors.transparent;
-    if(thing <= 50){
-      indicator = Colors.greenAccent;
-    }
-
-    return indicator;
-  }
-
-
+           leading: Icon(Icons.settings_input_antenna),
+           title: new Text(label,style: new TextStyle(fontWeight: FontWeight.normal,fontStyle: FontStyle.italic)),
+         ),
+        new ListTile(
+           leading: Icon(Icons.location_city),
+           title: new Text("Mountain View",style: new TextStyle(fontWeight: FontWeight.normal,fontStyle: FontStyle.italic)),
+         ),
+         new ListTile(
+           leading: Icon(Icons.cloud), //Is there any data that better fits here? Let me know(For example humidity and pressure, the sensors provide that too)
+           title: new Text(humidity,style: new TextStyle(fontWeight: FontWeight.normal,fontStyle: FontStyle.italic)),
+         )
+       ],
+     ),
+     ),
+   );
   
+  
+ }
+
+
 }
+
+ Card petCard(double set){ //I found out you can return Cards, so we can take advantage of this and make cleaner code 
+  Color indicator = Colors.grey;
+  String userText = "No Data";
+  double size = 12; //We need this so we can set the size according to how long the string is, some descriptions might require more or less space
+
+  if(set < 13){
+     indicator = Colors.greenAccent;
+     userText = "Air quality is safe for pets";
+     size = 15;
+   }
+   else if(set >= 13 && set <= 40){
+     indicator = Colors.yellowAccent;
+     userText = "Air quality is moderate, most pets will be fine";
+   }
+   else if(set >= 40 && set <= 55){
+     indicator = Colors.orangeAccent;
+     userText = "Minimize your Pet's outdoor time";
+   }
+   else if(set >= 55 && set <= 100){
+     indicator = Colors.redAccent;
+     userText = "All pets must be kept indoors";
+   }
+   else if(set >= 100){
+     indicator = Colors.purple;
+     userText = "Close all windows, and check air filter!";
+   }
+   else if(set == -1){
+     indicator = Colors.grey;
+     userText ="Click Refresh";
+   }
+
+   return new Card(
+     color: indicator, //The color we set before
+     child: new Row(
+        children: <Widget>[
+          new Icon(Icons.pets, color: Colors.black,size: 75),
+          new Text(userText, style: new TextStyle(fontSize: size),),//Passes in the text we set before along with the font size
+        ],
+     ),
+   );
+
+ }
+
+
+ Card maskCard(double set){ //I found out you can return Cards, so we can take advantage of this and make cleaner code 
+  Color indicator = Colors.grey;
+  String userText = "No Data";
+  double size = 12; //We need this so we can set the size according to how long the string is, some descriptions might require more or less space
+
+  if(set < 12){
+     indicator = Colors.greenAccent;
+     userText = "Mask not needed, open those windows and enjoy the air!";
+     size = 10;
+   }
+
+   const IconData(0xe9a9, fontFamily: 'MyFlutterApp');
+
+   return new Card(
+     color: indicator, //The color we set before
+     child: new Row(
+        children: <Widget>[
+        new Icon(IconData(0xe800, fontFamily: 'MyFlutterApp'), color: Colors.black,size: 75),
+        new Text(userText, style: new TextStyle(fontSize: size),),//Passes in the text we set before along with the font size
+        ],
+     ),
+   );
+
+ }
+
+Card outCard(double set){ //I found out you can return Cards, so we can take advantage of this and make cleaner code 
+  Color indicator = Colors.grey;
+  String userText = "No Data";
+  double size = 12; //We need this so we can set the size according to how long the string is, some descriptions might require more or less space
+
+  if(set < 12){
+     indicator = Colors.greenAccent;
+     userText = "Enjoy outdoor activities";
+     size = 15;
+   }
+
+
+   return new Card(
+     color: indicator, //The color we set before
+     child: new Row(
+        children: <Widget>[
+        new Icon(FontAwesomeIcons.footballBall,color: Colors.black,size: 75),
+        new Text(" "+userText, style: new TextStyle(fontSize: size),),//Passes in the text we set before along with the font size
+        ],
+     ),
+   );
+
+ }
+
+
+
+ /*
+      Homework, use my petCard example above to compleyte cards for the overall card, and the outdoor activities card.
+      
+      I have set you up the other two cards, fill in the if statements, and please do not use the same scale as the pet card, what is healthy for a dog vs a person running outside is very different
+
+      You will need to do more research in this homework than code, please get reliable sources and cite them below
+
+      
+
+      Pet sources:
+      -http://weliveinaflat.com/blog/singapore-haze-dog/
+
+      Mask Sources:
+      
+      Outdoor sources:
+      
+
+      Overall Source:
+      -https://aqicn.org/faq/2013-09-09/revised-pm25-aqi-breakpoints/
+
+
+  */
+
+
+
