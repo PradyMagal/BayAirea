@@ -218,7 +218,8 @@ class _HomePageState extends State<HomePage>{
    }
    else if(set >= 100){
      indicator = Colors.purple;
-     userText = "Close all windows, and check air filter!";
+     userText = "Air Quality is hazardous for pets, check air filter and close windows";
+     size = 10;
    }
    else if(set == -1){
      indicator = Colors.grey;
@@ -245,8 +246,38 @@ class _HomePageState extends State<HomePage>{
 
   if(set < 12){
      indicator = Colors.greenAccent;
-     userText = "Mask not needed, open those windows and enjoy the air!";
+     userText = "Open those windows and enjoy the air!";
+     size = 13;
+   }
+   if(set > 12 && set <= 35.4){
+     indicator = Colors.yellowAccent;
+     userText = "Air quality is moderate, unusually sensitive groups may experience problems";
      size = 10;
+   }
+    if(set > 35.4 && set <= 55.4){
+     indicator = Colors.orangeAccent;
+     userText = "Air quality is unhealthy for sensitive groups(Asthamatics, Elderly, etc.)";
+     size = 10;
+   }
+    if(set > 35.4 && set <= 55.4){
+     indicator = Colors.orangeAccent;
+     userText = "Air quality is unhealthy for sensitive groups(Asthamatics and Elderly need a mask)";
+     size = 10;
+   }
+    if(set > 55.4 && set <= 150.4){
+     indicator = Colors.redAccent;
+     userText = "Air quality is unhealthy, wear a mask";
+     size = 12;
+   }
+   if(set > 150.4 && set<=250.4 ){
+     indicator = Colors.red[900];
+     userText = "Air quality is very unhealthy, wear a mask";
+     size = 12;
+   }
+   if(set > 250.4 ){
+     indicator = Colors.purple;
+     userText = "Air quality is Hazardous, wear a mask, close all windows and check air filter";
+     size = 11;
    }
 
    const IconData(0xe9a9, fontFamily: 'MyFlutterApp');
@@ -256,6 +287,7 @@ class _HomePageState extends State<HomePage>{
      child: new Row(
         children: <Widget>[
         new Icon(IconData(0xe800, fontFamily: 'MyFlutterApp'), color: Colors.black,size: 75),
+        // new Column(),
         new Text(userText, style: new TextStyle(fontSize: size),),//Passes in the text we set before along with the font size
         ],
      ),
@@ -270,9 +302,10 @@ Card outCard(double set){ //I found out you can return Cards, so we can take adv
 
   if(set < 12){
      indicator = Colors.greenAccent;
-     userText = "Enjoy outdoor activities";
+     userText = "Enjoy outdoor activities"; //use my examples above, everything else is setup, this is how it should look
      size = 15;
    }
+   //Fill in more if statements here based on the scale
 
 
    return new Card(
