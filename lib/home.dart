@@ -35,8 +35,6 @@ class _HomePageState extends State<HomePage>{
    startUp();
   final screenSize = MediaQuery.of(context).size;
 
-   
-
    return new Scaffold(
      appBar: new GradientAppBar(title: Text("Bay Airea"), backgroundColorStart: Colors.tealAccent[100], backgroundColorEnd: Colors.blueAccent[100],),
      drawer: new Drawer(
